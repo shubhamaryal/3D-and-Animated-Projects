@@ -9,11 +9,11 @@ const App = () => {
         <div>
             <FullNav />
 
-            {/* <Routes>
+            <Routes>
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/agence" element={<Agence />}></Route>
                 <Route path="/projets" element={<Projets />}></Route>
-            </Routes> */}
+            </Routes>
         </div>
     );
 };
