@@ -4,15 +4,15 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import Loading from "./components/Loading.jsx";
-import NavContext from "./context/NavContext.jsx";
+import NavProvider from "./context/NavContext.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <BrowserRouter>
             <Loading>
-                <NavContext>
+                <NavProvider>
                     <App />
-                </NavContext>
+                </NavProvider>
             </Loading>
         </BrowserRouter>
     </StrictMode>,

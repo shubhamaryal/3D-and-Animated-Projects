@@ -1,14 +1,11 @@
 import { useRef, useEffect, useContext } from "react";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { NavContext } from "../context/NavContext";
 
 const Items = ({ mainText, insideText, src1, src2, svg }) => {
     const overlayRef = useRef(null);
     const marqueeRef = useRef(null);
     const tweenRef = useRef(null);
-
-    const mainTextRef = useRef(null);
 
     useEffect(() => {
         gsap.set(overlayRef.current, { yPercent: -100 });
@@ -24,22 +21,11 @@ const Items = ({ mainText, insideText, src1, src2, svg }) => {
         return () => tweenRef.current.kill();
     }, []);
 
-    useGSAP(() => {
-        gsap.from(mainTextRef.current, {
-            opacity: 0,
-            rotateX: 90,
-            delay: 1.65,
-            stagger: {
-                amount: 0.2,
-            },
-        });
-    });
-
     const handleMouseEnter = () => {
         gsap.to(overlayRef.current, {
             yPercent: 0,
             duration: 0.3,
-            ease: "easeInOut",
+            ease: "power2.inOut",
         });
         tweenRef.current.resume();
     };
@@ -48,17 +34,16 @@ const Items = ({ mainText, insideText, src1, src2, svg }) => {
         gsap.to(overlayRef.current, {
             yPercent: -100,
             duration: 0.3,
-            ease: "easeInOut",
+            ease: "power2.inOut",
         });
         tweenRef.current.pause();
     };
 
     return (
         <div
-            ref={mainTextRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className="w-full origin-top border-y border-white/50 text-center pt-8 relative overflow-hidden cursor-pointer"
+            className="w-full border-y border-white/50 text-center pt-8 relative overflow-hidden cursor-pointer"
         >
             <h1 className="text-[146px] leading-27 tracking-tight">
                 {mainText}
@@ -96,7 +81,6 @@ const Items = ({ mainText, insideText, src1, src2, svg }) => {
                                 alt=""
                             />
                         )}
-
                         <h2 className="shrink-0 pt-8">{insideText}</h2>
                         {svg ? (
                             <svg
@@ -141,7 +125,6 @@ const Items = ({ mainText, insideText, src1, src2, svg }) => {
                                 alt=""
                             />
                         )}
-
                         <h2 className="shrink-0 pt-8">{insideText}</h2>
                         {svg ? (
                             <svg
@@ -198,40 +181,59 @@ const FullNav = () => {
     const stairParentRef = useRef(null);
     const crossRef = useRef(null);
     const fullNavRef = useRef(null);
+    const contentRef = useRef(null);
     const tlRef = useRef(null);
 
     // Build timeline once on mount
+    // Build timeline once on mount
     useEffect(() => {
         const stairs = gsap.utils.toArray(".nav-stairs");
+
         gsap.set(stairs, { yPercent: -100 });
+        gsap.set(contentRef.current, { opacity: 0 });
+        gsap.set(crossRef.current, { opacity: 0, x: 60 });
 
         tlRef.current = gsap
             .timeline({ paused: true })
             .set(stairParentRef.current, { display: "flex" })
             .to(stairs, {
                 yPercent: 0,
-                duration: 0.6,
+                duration: 0.5,
                 ease: "power4.inOut",
-                stagger: { amount: 0.3, from: "start" },
+                stagger: { amount: 0.2, from: "start" },
             })
             .to(stairs, {
                 yPercent: 100,
-                duration: 0.6,
+                duration: 0.5,
                 ease: "power4.inOut",
-                stagger: { amount: 0.3, from: "start" },
+                stagger: { amount: 0.2, from: "start" },
             })
             .set(stairParentRef.current, {
                 display: "none",
                 pointerEvents: "none",
             })
-            .from(
+            // content, cross, and items all appear together instantly when stairs leave
+            .set(contentRef.current, { opacity: 1 })
+            .to(
                 crossRef.current,
                 {
-                    xPercent: 200,
-                    duration: 0.5,
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.4,
                     ease: "power4.out",
                 },
-                "<0.3",
+                "<",
+            )
+            .from(
+                ".nav-item",
+                {
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.4,
+                    ease: "power3.out",
+                    stagger: { amount: 0.2 },
+                },
+                "<",
             );
 
         return () => tlRef.current?.kill();
@@ -242,9 +244,12 @@ const FullNav = () => {
         if (!tlRef.current) return;
 
         if (navOpen) {
+            gsap.set(contentRef.current, { opacity: 0 });
+            gsap.set(stairParentRef.current, { display: "none" });
             fullNavRef.current.style.display = "block";
             tlRef.current.restart();
         } else {
+            gsap.to(contentRef.current, { opacity: 0, duration: 0.2 });
             tlRef.current.reverse();
             tlRef.current.eventCallback("onReverseComplete", () => {
                 fullNavRef.current.style.display = "none";
@@ -254,10 +259,11 @@ const FullNav = () => {
 
     return (
         <div ref={fullNavRef} style={{ display: "none" }}>
+            {/* Stairs overlay */}
             <div
+                ref={stairParentRef}
                 className="fixed top-0 left-0 w-full h-screen z-50"
                 style={{ display: "none" }}
-                ref={stairParentRef}
             >
                 <div className="flex h-full w-full">
                     <div className="nav-stairs h-screen w-1/5 bg-black"></div>
@@ -268,7 +274,11 @@ const FullNav = () => {
                 </div>
             </div>
 
-            <div className="bg-black h-screen w-full fixed top-0 text-white font-[font2]">
+            {/* Nav content */}
+            <div
+                ref={contentRef}
+                className="bg-black h-screen w-full fixed top-0 z-30 text-white font-[font2]"
+            >
                 <div className="flex flex-col">
                     <div className="flex justify-between p-3">
                         <svg
