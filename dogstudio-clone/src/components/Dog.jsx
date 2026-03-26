@@ -6,9 +6,15 @@ import {
     useTexture,
 } from "@react-three/drei";
 import * as THREE from "three";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Dog = () => {
+    gsap.registerPlugin(useGSAP());
+    gsap.registerPlugin(ScrollTrigger);
+
     const model = useGLTF("/models/dog.drc.glb");
 
     useThree(({ camera, scene, gl }) => {
@@ -23,13 +29,20 @@ const Dog = () => {
         actions["Take 001"].play();
     }, [actions]);
 
-    const [normalMap, sampleMatCap, branchMap, branchNormalMap] = useTexture([
+    const [normalMap, sampleMatCap] = useTexture([
         "/dog_normals.jpg",
         "/matcap/mat-2.png",
+    ]).map((texture) => {
+        texture.flipY = false;
+        texture.colorSpace = THREE.SRGBColorSpace;
+        return texture;
+    });
+
+    const [branchMap, branchNormalMap] = useTexture([
         "/branches_diffuse.jpeg",
         "/branches_normals.jpeg",
     ]).map((texture) => {
-        texture.flipY = false;
+        texture.flipY = true;
         texture.colorSpace = THREE.SRGBColorSpace;
         return texture;
     });
@@ -52,6 +65,44 @@ const Dog = () => {
         }
     });
 
+    const dogModel = useRef(model);
+
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#section-1",
+                endTrigger: "#section-3",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: true,
+                markers: true,
+            },
+        });
+        tl.to(dogModel.current.scene.position, {
+            z: "-=0.75",
+            y: "+=0.1",
+        })
+            .to(dogModel.current.scene.rotation, {
+                x: `+=${Math.PI / 15}`,
+            })
+            .to(
+                dogModel.current.scene.rotation,
+                {
+                    y: `-=${Math.PI}`,
+                },
+                "third",
+            )
+            .to(
+                dogModel.current.scene.position,
+                {
+                    x: "-=0.5",
+                    z: "+=0.6",
+                    y: "-=0.1",
+                },
+                "third",
+            );
+    });
+
     return (
         <>
             <primitive
@@ -64,7 +115,8 @@ const Dog = () => {
                 color={0xffffff}
                 intensity={10}
             />
-            <OrbitControls />
+
+            {/* <OrbitControls /> */}
         </>
     );
 };
