@@ -6,7 +6,33 @@ function App() {
     return (
         <>
             <main>
+                <div className="images">
+                    <img id="tomorrowland" src="/bg/tomorrowland.png" alt="" />
+                    <img id="navy-pier" src="/bg/navy-pier.png" alt="" />
+                    <img id="msi-chicago" src="/bg/msi-chicago.png" alt="" />
+                    <img
+                        id="this-was-louises-phone"
+                        src="/bg/this-was-louises-phone.png"
+                        alt=""
+                    />
+                    <img
+                        id="kikk-festival-2018"
+                        src="/bg/kikk-festival-2018.png"
+                        alt=""
+                    />
+                    <img
+                        id="the-kennedy-cneter"
+                        src="/bg/the-kennedy-cneter.png"
+                        alt=""
+                    />
+                    <img
+                        id="royal-opera-of-wallonia"
+                        src="/bg/royal-opera-of-wallonia.png"
+                        alt=""
+                    />
+                </div>
                 <Canvas
+                    id="canvas-elem"
                     style={{
                         height: "100vh",
                         width: "100vw",
@@ -14,9 +40,6 @@ function App() {
                         top: 0,
                         left: 0,
                         zIndex: 1,
-                        backgroundImage: "url('/background-l.png')",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
                     }}
                 >
                     <Dog />
@@ -87,7 +110,46 @@ function App() {
                     <div className="first-line"></div>
                     <div className="second-line"></div>
                 </section>
-                <section id="section-2"></section>
+
+                <section id="section-2">
+                    <div className="titles">
+                        <div img-title="tomorrowland" className="title">
+                            <small>2020 - TODAY</small>
+                            <h1>Tomorrowland</h1>
+                        </div>
+                        <div img-title="navy-pier" className="title">
+                            <small>2018 - TODAY</small>
+                            <h1>Navy Pier</h1>
+                        </div>
+                        <div img-title="msi-chicago" className="title">
+                            <small>2015 - TODAY</small>
+                            <h1>MSI Chicago</h1>
+                        </div>{" "}
+                        <div
+                            img-title="this-was-louises-phone"
+                            className="title"
+                        >
+                            <small>2016 - TODAY</small>
+                            <h1>This Was Louises Phone</h1>
+                        </div>
+                        <div img-title="kikk-festival-2018" className="title">
+                            <small>2012 - TODAY</small>
+                            <h1>KIKK Festival 2018</h1>
+                        </div>{" "}
+                        <div img-title="the-kennedy-cneter" className="title">
+                            <small>2017 - TODAY</small>
+                            <h1>The Kennedy Center</h1>
+                        </div>{" "}
+                        <div
+                            img-title="royal-opera-of-wallonia"
+                            className="title"
+                        >
+                            <small>2016 - TODAY</small>
+                            <h1>Royal Opera Of Wallonia</h1>
+                        </div>
+                    </div>
+                </section>
+
                 <section id="section-3"></section>
             </main>
         </>

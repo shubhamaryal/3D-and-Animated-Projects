@@ -30,6 +30,20 @@ section {
     z-index: 2;
 }
 
+#canvas-elem::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-image: url("/background-l.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.3s linear;
+}
+
 #section-1 {
     --gap: 3rem;
 
@@ -128,4 +142,131 @@ section {
         right: 23%;
         opacity: 70%;
     }
+}
+
+#section-2 {
+    .titles {
+        display: flex;
+        flex-direction: column;
+        padding-left: 16rem;
+        padding-block: 20rem;
+
+        .title {
+            opacity: 40%;
+            padding-block: 2rem;
+            display: flex;
+            gap: 4rem;
+            transition: all 0.3s linear;
+            cursor: pointer;
+
+            h1 {
+                font-size: 4.5rem;
+                font-weight: 10;
+                line-height: 1;
+                letter-spacing: 0.4rem;
+            }
+
+            small {
+                margin-top: 0.9rem;
+                font-size: 0.5rem;
+                letter-spacing: 0.2rem;
+            }
+        }
+
+        .title:hover {
+            opacity: 100%;
+        }
+    }
+}
+
+main:has(#section-2 .title:hover) #canvas-elem::after {
+    opacity: 0;
+}
+
+.images {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+
+    img {
+        height: 70vh;
+        width: 80vw;
+        object-fit: cover;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: all 0.3s linear;
+        -webkit-mask-image: radial-gradient(
+            ellipse closest-side,
+            black 75%,
+            transparent 100%
+        );
+        mask-image: radial-gradient(
+            ellipse closest-side,
+            black 75%,
+            transparent 100%
+        );
+    }
+}
+
+main {
+    transition: background-color 0.3s linear;
+}
+
+main:has(#section-2 .title[img-title="tomorrowland"]:hover) {
+    background-color: #010e27;
+}
+main:has(#section-2 .title[img-title="tomorrowland"]:hover) #tomorrowland {
+    opacity: 1;
+}
+
+main:has(#section-2 .title[img-title="navy-pier"]:hover) {
+    background-color: #050d2b;
+}
+main:has(#section-2 .title[img-title="navy-pier"]:hover) #navy-pier {
+    opacity: 1;
+}
+
+main:has(#section-2 .title[img-title="msi-chicago"]:hover) {
+    background-color: #051538;
+}
+main:has(#section-2 .title[img-title="msi-chicago"]:hover) #msi-chicago {
+    opacity: 1;
+}
+
+main:has(#section-2 .title[img-title="this-was-louises-phone"]:hover) {
+    background-color: #0d1b30;
+}
+main:has(#section-2 .title[img-title="this-was-louises-phone"]:hover)
+    #this-was-louises-phone {
+    opacity: 1;
+}
+
+main:has(#section-2 .title[img-title="kikk-festival-2018"]:hover) {
+    background-color: #031681;
+}
+main:has(#section-2 .title[img-title="kikk-festival-2018"]:hover)
+    #kikk-festival-2018 {
+    opacity: 1;
+}
+
+main:has(#section-2 .title[img-title="the-kennedy-cneter"]:hover) {
+    background-color: #0e2835;
+}
+main:has(#section-2 .title[img-title="the-kennedy-cneter"]:hover)
+    #the-kennedy-cneter {
+    opacity: 1;
+}
+
+main:has(#section-2 .title[img-title="royal-opera-of-wallonia"]:hover) {
+    background-color: #690202;
+}
+main:has(#section-2 .title[img-title="royal-opera-of-wallonia"]:hover)
+    #royal-opera-of-wallonia {
+    opacity: 1;
 }
