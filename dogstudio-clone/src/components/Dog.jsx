@@ -93,9 +93,9 @@ const Dog = () => {
     });
 
     const material = useRef({
-        uMatcap1: { value: mat2 },
-        uMatcap2: { value: mat19 },
-        uProgress: { value: 0.5 },
+        uMatcap1: { value: mat19 },
+        uMatcap2: { value: mat2 },
+        uProgress: { value: 1.0 },
     });
 
     const dogMaterial = new THREE.MeshMatcapMaterial({
@@ -160,7 +160,7 @@ const Dog = () => {
                 start: "top top",
                 end: "bottom bottom",
                 scrub: true,
-                markers: true,
+                // markers: true,
             },
         });
         tl.to(dogModel.current.scene.position, {
@@ -190,8 +190,9 @@ const Dog = () => {
 
     useEffect(() => {
         document
-            .querySelector(`.title[img-title='tomorrowland']`)
+            .querySelector(`.title[img-title="tomorrowland"]`)
             .addEventListener("mouseenter", () => {
+                material.current.uMatcap1.value = mat19;
                 gsap.to(material.current.uProgress, {
                     value: 0.0,
                     duration: 0.3,
@@ -202,6 +203,109 @@ const Dog = () => {
                     },
                 });
             });
+        document
+            .querySelector(`.title[img-title="navy-pier"]`)
+            .addEventListener("mouseenter", () => {
+                material.current.uMatcap1.value = mat8;
+
+                gsap.to(material.current.uProgress, {
+                    value: 0.0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        material.current.uMatcap2.value =
+                            material.current.uMatcap1.value;
+                        material.current.uProgress.value = 1.0;
+                    },
+                });
+            });
+        document
+            .querySelector(`.title[img-title="msi-chicago"]`)
+            .addEventListener("mouseenter", () => {
+                material.current.uMatcap1.value = mat9;
+
+                gsap.to(material.current.uProgress, {
+                    value: 0.0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        material.current.uMatcap2.value =
+                            material.current.uMatcap1.value;
+                        material.current.uProgress.value = 1.0;
+                    },
+                });
+            });
+        document
+            .querySelector(`.title[img-title="this-was-louises-phone"]`)
+            .addEventListener("mouseenter", () => {
+                material.current.uMatcap1.value = mat12;
+
+                gsap.to(material.current.uProgress, {
+                    value: 0.0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        material.current.uMatcap2.value =
+                            material.current.uMatcap1.value;
+                        material.current.uProgress.value = 1.0;
+                    },
+                });
+            });
+        document
+            .querySelector(`.title[img-title="kikk-festival-2018"]`)
+            .addEventListener("mouseenter", () => {
+                material.current.uMatcap1.value = mat10;
+
+                gsap.to(material.current.uProgress, {
+                    value: 0.0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        material.current.uMatcap2.value =
+                            material.current.uMatcap1.value;
+                        material.current.uProgress.value = 1.0;
+                    },
+                });
+            });
+        document
+            .querySelector(`.title[img-title="the-kennedy-cneter"]`)
+            .addEventListener("mouseenter", () => {
+                material.current.uMatcap1.value = mat8;
+
+                gsap.to(material.current.uProgress, {
+                    value: 0.0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        material.current.uMatcap2.value =
+                            material.current.uMatcap1.value;
+                        material.current.uProgress.value = 1.0;
+                    },
+                });
+            });
+        document
+            .querySelector(`.title[img-title="royal-opera-of-wallonia"]`)
+            .addEventListener("mouseenter", () => {
+                material.current.uMatcap1.value = mat13;
+
+                gsap.to(material.current.uProgress, {
+                    value: 0.0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        material.current.uMatcap2.value =
+                            material.current.uMatcap1.value;
+                        material.current.uProgress.value = 1.0;
+                    },
+                });
+            });
+        document.querySelector(`.titles`).addEventListener("mouseleave", () => {
+            material.current.uMatcap1.value = mat2;
+
+            gsap.to(material.current.uProgress, {
+                value: 0.0,
+                duration: 0.3,
+                onComplete: () => {
+                    material.current.uMatcap2.value =
+                        material.current.uMatcap1.value;
+                    material.current.uProgress.value = 1.0;
+                },
+            });
+        });
     }, []);
 
     return (

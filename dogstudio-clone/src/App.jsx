@@ -1,8 +1,10 @@
 import "./App.css";
 import Dog from "./components/Dog";
 import { Canvas } from "@react-three/fiber";
+import LocomotiveScroll from "locomotive-scroll";
 
 function App() {
+    const locomotiveScroll = new LocomotiveScroll();
     return (
         <>
             <main>
@@ -150,7 +152,45 @@ function App() {
                     </div>
                 </section>
 
-                <section id="section-3"></section>
+                <section id="section-3">
+                    <div className="top">
+                        <div className="left">
+                            {" "}
+                            <h3>
+                                We're crafting <br /> emotional <br />{" "}
+                                experiences aimed <br />
+                                at improving <br />
+                                results{" "}
+                            </h3>
+                        </div>
+                        <div className="right"></div>
+                    </div>
+                </section>
+                <div id="section-4">
+                    {" "}
+                    <div className="bottom">
+                        <div className="left"></div>
+                        <div className="right">
+                            <p>
+                                {" "}
+                                Dogstudio is a design & <br /> technology firm
+                                working globally <br /> from our offices based
+                                in <br /> Belgium and Chicago. <br /> Our strong
+                                focus on producing <br /> high quality &
+                                emotional <br /> brandings, digital products and{" "}
+                                <br /> experiences became a signature.
+                            </p>
+                            <p>
+                                We’re passionate about moving <br /> people and
+                                solving problems for <br /> the likes of
+                                Microsoft, The <br /> Museum of Science And
+                                Industry <br /> Of Chicago, The Kennedy Center{" "}
+                                <br /> of Washington, Dragone, Quanta <br />{" "}
+                                Magazine, and many more.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </main>
         </>
     );
